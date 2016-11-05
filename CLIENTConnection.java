@@ -1,3 +1,10 @@
+/*
+ * @author  Baranidharan Sridhar
+ * @version 1.8.0
+ * Program Name: ClientConnection.java
+ *
+ */
+
 package javap;
 
 import java.net.Socket;
@@ -16,7 +23,18 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.Logger
+
+
+/* 
+ * 
+ * Each connected peer runs in a separate thread as a ClientConnection
+ * This class is responsible for sending and receiving files across the peers
+ * 
+ * @param clientSelection console input to choose sending/receiving a file from the connected peers
+ * @param list of chunk files present in the current peer.
+ */
+
 public class CLIENTConnection implements Runnable {
 
     private Socket clientSocket;
@@ -58,7 +76,18 @@ public class CLIENTConnection implements Runnable {
             Logger.getLogger(CLIENTConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+/* 
+ * 
+ * If a user chooses to download a perticular file from other peers
+ * This function notifies the filename to all peers
+ * All peers check their list array to see if they have the file's chunk or not
+ * if they have the file, they send it across through socket stream
+ * 
+ * 
+ * 
+ * @param buffer byte buffer to read file as bytes from the socket input stream
+ * @param clientData datainput stream to read data from the client socket
+ */
     public void receiveFile() {
         try {
             int bytesRead;
@@ -82,7 +111,18 @@ public class CLIENTConnection implements Runnable {
             System.err.println("Client error. Connection closed.");
         }
     }
-
+/* 
+ * 
+ * If a user chooses to send a perticular file to other peers
+ * The file divided into bytes of chunks
+ * The list array of all the peers that receives the chunk will be updated
+ * if they already have the chunk, the chunk will be ignored
+ * 
+ * 
+ * 
+ * @param OutputStream handle file send over socket output stream
+ * 
+ */
     public void sendFile(String fileName) {
         try {
             //handle file read
